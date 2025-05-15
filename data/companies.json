@@ -1,0 +1,50 @@
+[
+  {
+    "companyName": "Tech Solutions Ltda",
+    "cnpj": "12.345.678/0001-99",
+    "email": "contato@techsolutions.com",
+    "phone": "(11) 99999-8888",
+    "address": "Rua Inovação, 123, São Paulo - SP",
+    "description": "Soluções inovadoras em tecnologia da informação."
+  },
+  {
+    "companyName": "Café Saboroso",
+    "cnpj": "98.765.432/0001-00",
+    "email": "cafe@saboroso.com",
+    "phone": "(21) 98765-4321",
+    "address": "Avenida das Palmeiras, 456, Rio de Janeiro - RJ",
+    "description": "O melhor café da cidade, com grãos selecionados."
+  },
+  {
+    "companyName": "Consultoria Delta",
+    "cnpj": "45.678.901/0001-04",
+    "email": "jeftertecinfo@gmail.com",
+    "phone": "11981816780",
+    "address": "Rua Teste Alfa, 789, Belo Horizonte - MG",
+    "description": "Consultoria empresarial especializada em crescimento."
+  },
+  {
+    "companyName": "Design Criativo Studio",
+    "cnpj": "12.216.533/4000-01",
+    "email": "estudio@designcriativo.net",
+    "phone": "(31) 12345-6789",
+    "address": "Praça da Arte, 10, Curitiba - PR",
+    "description": "Transformando ideias em designs impactantes."
+  },
+  {
+    "companyName": "teste",
+    "cnpj": "45678901000104",
+    "email": "jeftertecinfo@gmail.com",
+    "phone": "11981816780",
+    "address": "Rua teste",
+    "description": "tese"
+  },
+  {
+    "companyName": "IFPB",
+    "cnpj": "45678901000104",
+    "email": "jefter.lima@academico.ifbp.edu.br",
+    "phone": "11981816780",
+    "address": "Rua Joel Ramos, red Madrid, casa 12",
+    "description": "Testando salvamento"
+  }
+]
