@@ -1,0 +1,16 @@
+version: '3'
+services:
+  postgres:
+    container_name: harpia
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: harpia
+    #volumes:
+    #  - postgres-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    restart: unless-stopped
+#volumes:
+#  postgres-data:
