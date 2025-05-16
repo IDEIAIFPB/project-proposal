@@ -1,40 +1,40 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity()
+@Entity("app_user")
 export class User {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ length: 50, unique: true })
+    @Column({ unique: true })
     username: string;
 
-    @Column({ length: 100 })
+    @Column()
     name: string;
 
-    @Column({ length: 100, unique: true })
+    @Column({ unique: true })
     email: string;
 
     @Column()
     password: string;
 
-    @Column({ length: 20, unique: true })
+    @Column({ unique: true })
     document: string;
 
-    @Column({ length: 15 })
+    @Column()
     phone: string;
 
-    @Column({ type: "date" })
+    @Column({ type: "date", name: "date_of_birth" })
     dateOfBirth: Date;
 
-    @CreateDateColumn({ type: "timestamp" })
+    @CreateDateColumn({ type: "timestamp", name: "created_at" })
     createdAt: Date;
 
-    @Column({ default: false })
+    @Column({ default: false, name: "is_confirmed" })
     isConfirmed: boolean;
 
-    @Column({ type: "varchar", length: 8, nullable: true })
+    @Column({ type: "varchar", name: "confirmation_code", nullable: true })
     confirmationCode: string | null;
 
-    @Column({ type: "varchar", length: 8, nullable: true })
+    @Column({ type: "varchar", name: "reset_code", nullable: true })
     resetCode: string | null;
 }
