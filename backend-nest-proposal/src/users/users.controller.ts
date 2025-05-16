@@ -19,7 +19,6 @@ import { JWTAuthGuard } from "../common/validators/jwt-auth.guard";
 export class UsersController {
     constructor(private readonly service: UsersService) { }
 
-    @UseGuards(JWTAuthGuard)
     @Get()
     findAll() {
         return this.service.findAll();
