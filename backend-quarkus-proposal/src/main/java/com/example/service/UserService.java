@@ -5,6 +5,8 @@ import com.example.entity.User;
 import com.example.exceptions.CustomException;
 import com.example.mapper.UserMapper;
 import com.example.repository.UserRepository;
+
+import io.quarkus.elytron.security.common.BcryptUtil;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
@@ -12,15 +14,12 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import jakarta.ws.rs.core.Response;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.HashSet;
-import java.util.stream.Collectors;
 
 import static com.example.exceptions.CustomException.ErrorType.NOT_FOUND;
 
@@ -41,6 +40,7 @@ public class UserService {
 
     @Transactional
     public UserDto post(UserDto userDto) {
+        userDto.password = BcryptUtil.bcryptHash(userDto.password, 10);
         User user = userMapper.toEntity(userDto);
         userRepository.persist(user);
         return userMapper.toDto(user);

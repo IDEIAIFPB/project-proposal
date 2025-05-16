@@ -19,6 +19,10 @@ public class UserRepository implements PanacheRepository<User>, UserRepo {
         return em.find(User.class, id);
     }
 
+    public User findByEmail(String email) {
+        return (User) em.createQuery("select u from User u where u.email = :email").setParameter("email", email).getSingleResult();
+    }
+
     @Override
     public Void deleteById(UUID id) {
         User user = em.find(User.class, id);
