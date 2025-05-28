@@ -29,8 +29,12 @@ interface Message extends ReceivedMessage {
     chat: string;
 }
 
-export function ChatWindow() {
-    const PHONE_NUMBER_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
+interface ChatWindowProps {
+    accessToken: string;
+    phoneNumberId: string;
+}
+
+export function ChatWindow({ accessToken, phoneNumberId }: ChatWindowProps) {
     const [activeChat, setActiveChat] = useState<string | null>(null);
     const [newMessage, setNewMessage] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
@@ -77,7 +81,8 @@ export function ChatWindow() {
 
 
     const { sendMessage } = useWhatsAppSocket({
-        phoneNumberId: PHONE_NUMBER_ID,
+        phoneNumberId: phoneNumberId,
+        accessToken: accessToken,
         onNewMessages: handleNewMessages,
         onStatusUpdates: handleStatusUpdates,
         onError: handleError
@@ -88,12 +93,11 @@ export function ChatWindow() {
             const text = newMessage.trim();
             if (activeChat && text) {
                 const timestamp = new Date().getTime() / 1000;
-                console.log(timestamp);
                 const result = await sendMessage(activeChat, text);
 
                 setMessages(prev => [...prev, {
                     id: result.messages[0].id,
-                    from: PHONE_NUMBER_ID,
+                    from: phoneNumberId,
                     chat: activeChat,
                     timestamp: timestamp.toString(),
                     type: "text",
@@ -198,14 +202,14 @@ export function ChatWindow() {
                                                 key={message.id}
                                                 className={cn(
                                                     "flex animate-in fade-in slide-in-from-bottom-2 duration-300",
-                                                    message.from === PHONE_NUMBER_ID ? "justify-end" : "justify-start"
+                                                    message.from === phoneNumberId ? "justify-end" : "justify-start"
                                                 )}
                                                 role="listitem"
-                                                aria-label={`Mensagem de ${message.from === PHONE_NUMBER_ID ? "você" : "contato"}`}
+                                                aria-label={`Mensagem de ${message.from === phoneNumberId ? "você" : "contato"}`}
                                             >
                                                 <MessageBubble
                                                     message={message}
-                                                    isSender={message.from === PHONE_NUMBER_ID}
+                                                    isSender={message.from === phoneNumberId}
                                                 />
                                             </div>
                                         ))}

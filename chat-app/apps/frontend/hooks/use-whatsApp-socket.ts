@@ -5,6 +5,7 @@ import { io, Socket } from "socket.io-client";
 
 interface UseWhatsAppSocketProps {
     phoneNumberId: string;
+    accessToken: string;
     onNewMessages: (message: ReceivedMessages) => void;
     onStatusUpdates: (update: StatusUpdates) => void;
     onError: (error: Error) => void;
@@ -12,6 +13,7 @@ interface UseWhatsAppSocketProps {
 
 export function useWhatsAppSocket({
     phoneNumberId,
+    accessToken,
     onNewMessages,
     onStatusUpdates,
     onError
@@ -20,7 +22,10 @@ export function useWhatsAppSocket({
 
     if (socketRef.current == null) {
         socketRef.current = io("http://localhost:3000/whatsapp", {
-            query: { phone_number_id: phoneNumberId }
+            query: {
+                phone_number_id: phoneNumberId,
+                access_token: accessToken
+            }
         });
     }
 
@@ -41,8 +46,8 @@ export function useWhatsAppSocket({
         socket.on("error", onError);
 
         return () => {
-            socket.off("new_message", handleMessages);
-            socket.off("new_status", handleStatuses);
+            socket.off("new_messages", handleMessages);
+            socket.off("new_statuses", handleStatuses);
             socket.disconnect();
         };
     }, [handleMessages, handleStatuses, onError]);

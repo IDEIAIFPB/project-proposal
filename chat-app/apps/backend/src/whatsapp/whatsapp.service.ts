@@ -27,7 +27,7 @@ export class WhatsAppService {
         };
 
         const headers = {
-            Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
+            Authorization: `Bearer ${dto.access_token}`,
             "Content-Type": "application/json",
         };
 

@@ -12,6 +12,10 @@ export class SendMessageDto {
     @IsNotEmpty()
     @IsString()
     phone_number_id: string;
+
+    @IsNotEmpty()
+    @IsString()
+    access_token: string;
 }
 
 export class WsSendMessageDto {

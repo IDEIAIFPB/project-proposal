@@ -29,9 +29,14 @@ export class WhatsAppGateway implements OnGatewayConnection, OnGatewayDisconnect
         private readonly service: WhatsAppService
     ) { }
 
-    private getPhoneNumberId(client: Socket) {
-        const { phone_number_id } = client.handshake.query;
-        return Array.isArray(phone_number_id) ? phone_number_id[0] : phone_number_id;
+    private getCredentials(client: Socket) {
+        const { phone_number_id, access_token } =
+            client.handshake.query;
+
+        return {
+            accessToken: Array.isArray(access_token) ? access_token[0] : access_token,
+            phoneNumberId: Array.isArray(phone_number_id) ? phone_number_id[0] : phone_number_id
+        };
     }
 
     private handleInvalidConnection(client: Socket, reason: string) {
@@ -40,10 +45,13 @@ export class WhatsAppGateway implements OnGatewayConnection, OnGatewayDisconnect
     }
 
     async handleConnection(client: Socket) {
-        const phoneNumberId = this.getPhoneNumberId(client);
+        const { phoneNumberId, accessToken } = this.getCredentials(client);
 
         if (!phoneNumberId)
             return this.handleInvalidConnection(client, "Phone number id is required");
+
+        if (!accessToken)
+            return this.handleInvalidConnection(client, "Access token is required");
 
         try {
             await client.join(`user:${phoneNumberId}`);
@@ -59,13 +67,18 @@ export class WhatsAppGateway implements OnGatewayConnection, OnGatewayDisconnect
 
     @SubscribeMessage("send-message")
     async handleSendMessage(client: Socket, payload: WsSendMessageDto) {
-        const phoneNumberId = this.getPhoneNumberId(client);
+        const { phoneNumberId, accessToken } = this.getCredentials(client);
+        this.getCredentials(client);
 
         if (!phoneNumberId)
             return this.handleInvalidConnection(client, "Phone number id is required");
 
+        if (!accessToken)
+            return this.handleInvalidConnection(client, "Access token is required");
+
         const response = await this.service.sendMessage({
             phone_number_id: phoneNumberId,
+            access_token: accessToken,
             ...payload
         });
 
