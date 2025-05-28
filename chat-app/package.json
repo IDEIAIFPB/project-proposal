@@ -1,0 +1,27 @@
+{
+    "name": "chat-app",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "ngrok": "wait-port 3000 && ngrok http 3000",
+        "dev:backend": "pnpm --filter backend start:dev",
+        "dev:ngrok": "concurrently -n backend,ngrok -c yellow,green \"pnpm dev:backend\" \"pnpm ngrok\"",
+        "dev:frontend": "pnpm --filter frontend dev",
+        "docker:up": "docker-compose up -d",
+        "docker:down": "docker-compose down",
+        "dev": "concurrently -n docker,backend,frontend -c yellow,blue,green \"pnpm docker:up\" \"pnpm dev:ngrok\" \"pnpm dev:frontend\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.11.0",
+    "devDependencies": {
+        "concurrently": "^9.1.2",
+        "wait-port": "^1.1.0"
+    },
+    "dependencies": {
+        "axios": "^1.9.0"
+    }
+}

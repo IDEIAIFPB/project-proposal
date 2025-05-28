@@ -1,0 +1,14 @@
+services:
+  postgres:
+    restart: always
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: harpia
+    #volumes:
+    #  - postgres-data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+#volumes:
+#  postgres-data:
