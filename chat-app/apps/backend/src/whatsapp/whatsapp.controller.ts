@@ -19,7 +19,6 @@ export class WhatsAppController {
 
     @Post("webhook")
     handleWebhook(@Body() body: WebhookNotificationDto) {
-        console.log("Webhook received:", JSON.stringify(body, null, 2));
         for (const entry of body.entry)
             this.service.handleWebhookEntry(entry);
         return { received: true };
